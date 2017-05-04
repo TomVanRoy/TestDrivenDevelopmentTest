@@ -17,16 +17,16 @@ namespace TestDrivenDevelopmentTest
         [TestMethod]
         public void PersoonHeeftMinstensEenVoornaam()
         {
-            Assert.IsTrue(persoon.voornaam.Count > 0 && persoon.voornaam != null);
+            Assert.IsTrue(persoon.Voornaam.Count > 0 && persoon.Voornaam != null);
         }
 
         [TestMethod]
         public void PersoonHeeftNietTweeKeerDezelfdeVoornaam()
         {
-            foreach (var eenVoornaam in persoon.voornaam)
+            foreach (var eenVoornaam in persoon.Voornaam)
             {
                 int amount = 0;
-                foreach (var duplicaatVoornaam in persoon.voornaam)
+                foreach (var duplicaatVoornaam in persoon.Voornaam)
                 {
                     if (eenVoornaam == duplicaatVoornaam)
                     {
@@ -41,7 +41,7 @@ namespace TestDrivenDevelopmentTest
         public void ElkeVoornaamHeeftMinstensEenTeken()
         {
             Regex reg = new Regex("\\w+?");
-            foreach (var eenVoornaam in persoon.voornaam)
+            foreach (var eenVoornaam in persoon.Voornaam)
             {
                 Assert.IsTrue(reg.IsMatch(eenVoornaam));
             }
@@ -51,7 +51,7 @@ namespace TestDrivenDevelopmentTest
         public void ToStringGeeftAlleVoornamenGescheidenMetSpaties()
         {
             string result = "";
-            foreach (var eenVoornaam in persoon.voornaam)
+            foreach (var eenVoornaam in persoon.Voornaam)
             {
                 result += eenVoornaam + " ";
             }

@@ -11,17 +11,24 @@ namespace TestDrivenDevelopment
         // Constructor
         public Persoon(List<string> voornaam)
         {
-            this.voornaam = voornaam;
+            Voornaam = voornaam;
         }
 
         // Property
-        public List<string> voornaam { get; set; }
+        private List<string> voornaamValue;
+
+        public List<string> Voornaam
+        {
+            get { return voornaamValue; }
+            set { voornaamValue = value; }
+        }
+
 
         // Method
         public override string ToString()
         {
             string result = "";
-            foreach (var eenVoornaam in voornaam)
+            foreach (var eenVoornaam in Voornaam)
             {
                 result += eenVoornaam + " ";
             }
