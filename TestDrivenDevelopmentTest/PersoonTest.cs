@@ -1,62 +1,49 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestDrivenDevelopment;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace TestDrivenDevelopmentTest
 {
     [TestClass]
     public class PersoonTest
     {
-        private Persoon persoon;
-        [TestInitialize]
-        public void Initialize()
-        {
-            persoon = new Persoon(new System.Collections.Generic.List<string> { "Gert", "Pieter", "Jan" });
-        }
         [TestMethod]
-        public void PersoonHeeftMinstensEenVoornaam()
+        public void PersoonIsCorrect()
         {
-            Assert.IsTrue(persoon.Voornaam.Count > 0 && persoon.Voornaam != null);
+            new Persoon(new List<string> { "Gert", "Pieter", "Jan" });
         }
-
-        [TestMethod]
-        public void PersoonHeeftNietTweeKeerDezelfdeVoornaam()
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void PersoonZonderNaamIsVerkeerd()
         {
-            foreach (var eenVoornaam in persoon.Voornaam)
-            {
-                int amount = 0;
-                foreach (var duplicaatVoornaam in persoon.Voornaam)
-                {
-                    if (eenVoornaam == duplicaatVoornaam)
-                    {
-                        amount++;
-                    }
-                }
-                Assert.IsTrue(amount == 1);
-            }
+            new Persoon(null);
         }
-
-        [TestMethod]
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void LegeNaamListIsVerkeerd()
+        {
+            new Persoon(new List<string> { });
+        }
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void LegestringInNaamListIsVerkeerd()
+        {
+            new Persoon(new List<string> { string.Empty });
+        }
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void PersoonHeeftNietTweeMaalDezelfdeVoornaam()
+        {
+            new Persoon(new List<string> { "Pieter", "Karel", "Pieter" });
+        }
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
         public void ElkeVoornaamHeeftMinstensEenTeken()
         {
-            Regex reg = new Regex("\\w+?");
-            foreach (var eenVoornaam in persoon.Voornaam)
-            {
-                Assert.IsTrue(reg.IsMatch(eenVoornaam));
-            }
+            new Persoon(new List<string> { "Pieter", "", "Karel" });
         }
-
         [TestMethod]
         public void ToStringGeeftAlleVoornamenGescheidenMetSpaties()
         {
-            string result = "";
-            foreach (var eenVoornaam in persoon.Voornaam)
-            {
-                result += eenVoornaam + " ";
-            }
-            result.Remove(result.LastIndexOf(" "));
-            Assert.AreEqual(persoon.ToString(), result);
+            Persoon persoon = new Persoon(new List<string> { "Gert", "Pieter", "Jan" });
+            string result = "Gert Pieter Jan";
+            Assert.AreEqual(result, persoon.ToString());
         }
     }
 }
